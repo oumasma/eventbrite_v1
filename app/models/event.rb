@@ -2,7 +2,7 @@ class Event < ApplicationRecord
 
 	has_many :attendances
     has_many :users, through: :attendances
-    belongs_to :admin
+    belongs_to :admin, class_name: "User", required: false
 
 	validates :start_date, presence: true 
     validate :start_date_not_before_time_now

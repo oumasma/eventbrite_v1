@@ -14,8 +14,8 @@ Attendance.destroy_all
 Faker::Config.locale = 'fr'
 
 
-50.times do 
-User.create(
+3.times do 
+User.create!(
     email:Faker::Internet.email(domain: 'yopmail.com'),
     encrypted_password:Faker::Internet.password,
     description:Faker::ChuckNorris.fact,
@@ -23,16 +23,32 @@ User.create(
     last_name:Faker::Name.last_name)
 end 
 
-15.times do
-    Event.create(start_date:Faker::Date.between(from: '2021-01-01',to: '2021-12-31'), 
-     duration:rand(1..600),
+3.times do
+    Event.create!(start_date:Faker::Date.between(from: '2021-01-01',to: '2021-12-31'), 
+     duration:rand(5..100)*5,
      title:Faker::FunnyName.two_word_name, 
      description:Faker::GreekPhilosophers.quote, 
      price:rand(1..1000),
-     location:Faker::Nation.capital_city)
+     location:Faker::Nation.capital_city,
+     admin_id: User.all.sample.id)
 end
 
 
+5.times do
+    Attendance.create!(
+        stripe_customer_id:rand(1..60),
+        user_id: User.all.sample.id,
+        event_id: Event.all.sample.id)
+end
+
+
+#dans airbnb backend
+#10.times do
+	#Reservation.create(
+		#start_date: Faker::Date.in_date_period, 
+		#end_date: Faker::Date.in_date_period, 
+		#listing: Listing.all.sample, 
+		#user: User.all.sample)
 
 
 
